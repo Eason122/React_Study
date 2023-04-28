@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fianceeeeeeee</title>
+</head>
+<div id="test"></div>
+<!-- {/* React 核心庫 */} -->
+    <!-- <script type="text/javascript" src="../js/react.development.js"></script> -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <!-- {/* React 擴充庫 */} -->
+    <!-- <script type="text/javascript" src="../js/react-dom.development.js"></script> -->
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- {/* Babel 將JSX轉為JS */} -->
+    <!-- <script type="text/javascript" src="../js/babel.min.js"></script> -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<body>
+    <script type="text/javascript">
+        /*
+            總結：
+                1.類中的構造器中不是必須寫的，要對實例進行一些初始化的操作時，如添加“指定屬性”時才寫。
+                2.如果Ａ類繼承了Ｂ類，且Ａ類中寫了構造器，那Ａ類構造器中 " super "就必須要調用。
+                3.類中所定義的方法，都是放在原型對象上，供實例使用。
+        */
+        // 創建一個Person類
+        class Person {
+            // 建構子（構造器）方法。
+            constructor(name, age) {
+                //建構子的實例對象是誰？ －－ class的實例對象。
+                this.name = name;
+                this.age = age;
+            }
+            //  一般方法
+            speak() {
+                // speak方法放在哪裡？ －－類的原型對象上，供實例使用。
+                console.log(`我叫${this.name},我現在${this.age}歲`)
+            }
+        }
+        //  Vip繼承Person類，因此建構子上需要在一開始使用super繼承父層(Person)類的建構子
+        class Vip extends Person {
+            constructor(name, age, mood, info) {
+                super(name, age)
+                this.mood = mood
+                this.info = info
+            }
+            speak() {
+                console.log(`我叫${this.name}，我現在${this.age}歲，我${this.mood}，是${this.info}。`)
+            }
+        }
+
+        // 創建一個Person、Vip的實例對象
+        const p0 = new Person('陳逸政', 30)
+        const p1 = new Person('陳建勳', 30)
+        const p2 = new Person('楊嫌', 31)
+        const l1 = new Vip('陳姝蓉', 31, "很愛生氣！", "Eason的Fiancee")
+       
+        console.log(p1)
+        console.log(p2)
+        console.log(l1)
+
+        p1.speak()
+        p2.speak()
+        l1.speak()
+
+    </script>
+    <script type="text/babel">
+         const VDOM = (
+            <div>
+                <h1>請打開F12，然後點選Console查看。</h1>
+            </div>
+        )
+
+        ReactDOM.render(VDOM, document.getElementById("test"))
+    </script>
+</body>
+
+</html>

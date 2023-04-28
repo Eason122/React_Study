@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+    <!-- {/*容器*/} -->
+    <div>
+        <div id="test"></div>
+    </div>
+    <!-- {/* React 核心庫 */} -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- {/* React 擴充庫 */} -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- {/* Babel 將JSX轉為JS */} -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- {/* 注意!! type須改為Babel才可執行jsx語法 */} -->
+    <script type="text/babel">
+        class Clicks extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = { count: 0 }
+            }
+            clickCount = () => {
+                this.setState({ count: this.state.count + 1 })
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h1>點擊次數:{this.state.count},次</h1>
+                        <button onClick={this.clickCount}>點擊增加次數</button>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Clicks /> ,document.getElementById('test'))
+    </script>
+</body>
+
+</html>

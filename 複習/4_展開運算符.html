@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        let arr1 = [1, 3, 5, 7, 9]
+        let arr2 = [2, 4, 6, 8, 10]
+        console.log(...arr1) // 展開一個陣列
+        let arr3 = [...arr1, ...arr2] // 連接數組
+
+        //  函數中使用 展開運算符進行加總
+        function sum(...numbers) {
+            return numbers.reduce((preValue, currentValue) => {
+                return preValue + currentValue
+            })
+        }
+        console.log(sum(1, 2, 3, 4))
+
+        // 構造字面量對象時使用展開語法
+        let person = { name: "tom", age: 18 }
+        let person1 = { ...person }
+        //console.log(...person)  //若在console.log上直接運行展開運算符，將報錯，因展開運算符無法展開對象
+        person.name = 'jack'
+        console.log(person1)
+        console.log(person)
+
+        // 合併
+        let person3 = { ...person, name: "jerry", address: "台灣" }
+        console.log(person3)
+    </script>
+</body>
+
+</html>

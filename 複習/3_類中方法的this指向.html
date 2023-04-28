@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>類方法中的this指向</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        class Person {
+            constructor(name, age) {
+                this.name = name
+                this.age = age
+            }
+            study() {
+                //此處自動開啟嚴格模式 因此this沒有從Person中調用的話，將找不到this
+                console.log(this)
+            }
+        }
+        const p1 = new Person("菲菲", 18)
+        p1.study()
+        // 此處為額外調用study()的方法
+        const x = p1.study
+        x()
+    </script>
+</body>
+
+</html>

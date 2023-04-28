@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用jsx創建虛擬dom</title>
+    <style>
+        .title{
+            background:#ccc;
+            width:200px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- {/*容器*/} -->
+    <div>
+        <div id="test"></div>
+    </div>
+    <!-- {/* React 核心庫 */} -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- {/* React 擴充庫 */} -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- {/* Babel 將JSX轉為JS */} -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- {/* 注意!! type須改為Babel才可執行jsx語法 */} -->
+    <script type="text/babel">
+        // 設定變數套用在id,class上
+        const myId = "idTag"
+        const mydata = "test"
+        //{/*創建一個VDOM為h1標籤，切記無需使用ＪＳ引號標籤*/}
+        const VDOM =(
+            <div>
+                <h1 className='title' id={myId.toLowerCase()}>
+                    <span style={{color:'white',fontSize:'20px'}}>{mydata.toLowerCase()}</span>
+                </h1>
+            </div>                
+            ) 
+        //{/*將寫好的VDOM渲染到真實DOM裏面*/}
+        ReactDOM.render(VDOM,document.getElementById('test'))
+    </script>
+</body>
+
+</html>
