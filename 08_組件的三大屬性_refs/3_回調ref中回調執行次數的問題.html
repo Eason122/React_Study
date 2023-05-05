@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>3_回調ref中回調執行次數的問題</title>
+</head>
+
+<body>
+    <!-- 容器 -->
+    <div>
+        <div id="test"></div>
+    </div>
+    <!--  React 核心庫  -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <!--  React 擴充庫  -->
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!--  Babel 將JSX轉為JS -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!--  注意!! type須改為Babel才可執行jsx語法  -->
+    <script type="text/babel">
+        // 創建類組件
+        class Demo extends React.Component {
+            state = { isHot: true }
+            showInfo = () => {
+                const { input1 } = this
+                alert(input1.value)
+            }
+
+            changeWeather = () => {
+                //  獲取原來的狀態
+                const { isHot } = this.state
+                //  更新狀態
+                this.setState({ isHot: !isHot })
+            }
+            // 使用class綁定refs的方式。
+            safeInput = (c) => {
+                this.input1 = c
+                console.log('@', c)
+            }
+            // ----- !!!!   此範例為說明在input的ref中寫內聯函式對於DOM的影響，雖使用內聯方式會導致渲染時創建的第一個會顯示null，官方建議使用class的方式綁定函數如：（safeInpu）但實際使用上其實並不影響功能，以自身習慣編寫即可。  !!!! ----- //
+            render() {
+                const { isHot } = this.state
+                return (
+                    <div>
+                        <h2>今天天氣很{isHot ? '炎熱' : '涼爽'}</h2>
+                        {/*<input ref={(currentNode) => { this.input1 = currentNode; console.log('調用次數：', currentNode) }} type="text" />&nbsp;*/}
+                        <input ref={this.safeInput} type="text" />
+                        <button onClick={this.showInfo}>點擊提示數據</button>&nbsp;<br />
+                        <button onClick={this.changeWeather}>點我切換天氣</button>&nbsp;
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>

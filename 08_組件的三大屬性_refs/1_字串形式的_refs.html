@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>01_字串的refs</title>
+</head>
+
+<body>
+    <!-- 容器 -->
+    <div>
+        <div id="test"></div>
+    </div>
+    <!--  React 核心庫  -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <!--  React 擴充庫  -->
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!--  Babel 將JSX轉為JS -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!--  注意!! type須改為Babel才可執行jsx語法  -->
+    <script type="text/babel">
+        // 創建類組件
+        class Demo extends React.Component {
+            showData = () => {
+                console.log(this.refs)
+                const { input1 } = this.refs
+                alert(input1.value)
+
+            }
+            showData2 = () => {
+                console.log(this.refs)
+                const { input2 } = this.refs
+                alert(input2.value)
+            }
+            render() {
+                return (
+                    <div>
+                        <input ref="input1" type="text" placeholder="點擊按鈕提示數據" />&nbsp;
+                        <button onClick={this.showData}>點擊提示左側數據</button>&nbsp;
+                        <input onBlur={this.showData2} ref="input2" type="text" placeholder="失去焦點提示數據" />
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+    <!-- {/*容器*/} -->
+    <div>
+        <div id="test"></div>
+    </div>
+    <div>
+        <div id="test2"></div>
+    </div>
+    <div>
+        <div id="test3"></div>
+    </div>
+    <!-- {/* React 核心庫 */} -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- {/* React 擴充庫 */} -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- {/* Babel 將JSX轉為JS */} -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- PropType 對prop進行型別的限制 15版本以前可用 後不可用 需進行引入 -->
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <!-- {/* 注意!! type須改為Babel才可執行jsx語法 */} -->
+    <script type="text/babel">
+        class Person extends React.Component {
+            //  構造器是否接收props,是否傳遞給super,取決於是否希望在構造器中通過this訪問props
+            //  若無需求，構造器可以精簡
+            constructor(props){
+                super(props)
+                console.log('constructor',this.props)
+            }
+            static propType = {   // 設定摻數的型別   
+                name: PropTypes.string.isRequired, //限制Name isRequired為必要值 且為字串
+                sex: PropTypes.string,             //限制sex為字串  
+                age: PropTypes.number,             //限制age為數字
+                spaek: PropTypes.func              //限制speak為函數
+            }
+            static defaultProps = {        // 預設摻數
+                sex: "男",           //sex默認值為男
+                age: 18              //age默認值為18
+
+            }
+            render() {
+                const { name, age, sex } = this.props
+                // Props是只讀的
+                // this.props.name = 'jack'   //此行代碼會報錯,因為prop是只讀的！
+                return (
+                    <ul>
+                        <li>姓名：{name}</li>
+                        <li>年齡：{age + 1}</li>
+                        <li>性別：{sex}</li>
+                    </ul>
+                )
+            }
+        }
+
+        ReactDOM.render(<Person name='jerry'/>, document.getElementById('test'))
+
+    </script>
+</body>
+
+</html>

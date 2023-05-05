@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+    <!-- {/*容器*/} -->
+    <div>
+        <div id="test"></div>
+    </div>
+    <div>
+        <div id="test2"></div>
+    </div>
+    <div>
+        <div id="test3"></div>
+    </div>
+    <!-- {/* React 核心庫 */} -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- {/* React 擴充庫 */} -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- {/* Babel 將JSX轉為JS */} -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- {/* 注意!! type須改為Babel才可執行jsx語法 */} -->
+    <script type="text/babel">
+        class Person extends React.Component {
+            render() {
+                const { name, age, sex } = this.props
+                return (
+                    <ul>
+                        <li>姓名：{name}</li>
+                        <li>年齡：{age+1}</li>
+                        <li>性別：{sex}</li>
+                    </ul>
+                )
+            }
+        }
+
+        const p = { name: 'tim', age: 30, sex: "男" }
+        //  將組件外的資料傳進組件內部，使用props寫在html標籤上進行傳遞。
+        ReactDOM.render(<Person {...p} />, document.getElementById("test")) // 展開運算符
+        ReactDOM.render(<Person name='jerry' age="18" sex="男" />, document.getElementById("test2"))    // 直接傳遞摻數
+        ReactDOM.render(<Person name='jack' age={19} sex="男"/>, document.getElementById("test3"))
+    </script>
+</body>
+
+</html>
