@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>2_受控組件</title>
+</head>
+
+<body>
+    <!-- 容器 -->
+    <div>
+        <div id="test"></div>
+    </div>
+    <!--  React 核心庫  -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <!--  React 擴充庫  -->
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!--  Babel 將JSX轉為JS -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!--  注意!! type須改為Babel才可執行jsx語法  -->
+    <script type="text/babel">
+        class Login extends React.Component {
+            //初始化狀態
+            state = {
+                username: '',
+                password: ''
+            }
+            //保存用戶名到狀態
+            saveUsername = (event) => {
+                this.setState({ username: event.target.value })
+            }
+            //保存密碼到狀態
+            savePassword = (event) => {
+                this.setState({ password: event.target.value })
+            }
+            //表單提交的回調
+            handleSubmit = (event) => {
+                event.preventDefault()    // 原生阻止表單提交方法 preventDefault
+                const { username, password } = this.state
+                alert(`你輸入的帳號是：${username},輸入的密碼是：${password}`)
+            }
+            render() {
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        帳號：<input type="text" name="username" onChange={this.saveUsername} />
+                        密碼：<input type="password" name="password" onChange={this.savePassword} />
+                        <button>登入</button>
+                    </form>
+                )
+            }
+        }
+        ReactDOM.render(<Login />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>
