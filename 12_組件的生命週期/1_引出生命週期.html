@@ -19,7 +19,45 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!--  注意!! type須改為Babel才可執行jsx語法  -->
     <script type="text/babel">
+        // 創建組件
+        class Life extends React.Component {
+            state = { opacity: 1 }
+            // 卸載組件 unmont
+            death = () => {
+                ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+            }
+            //  組件將要卸載時調用
+            componentWillUnmount() {
+                clearInterval(this.timer)
+            }
 
+            // React 組件掛載完畢時調用
+            componentDidMount() {
+                this.timer = setInterval(() => {
+                    // 獲取原來的狀態
+                    let { opacity } = this.state
+                    // 減小0.1
+                    opacity -= 0.1
+                    if (opacity <= 0) opacity = 1
+                    // 設置新的透明度
+                    this.setState({ opacity })
+
+                    console.log('@')
+
+                }, 200)
+            }
+            // React 初始化渲染、狀態更新之後
+            render() {
+                return (
+                    <div>
+                        <h2 style={{ opacity: this.state.opacity }}>React學不會怎麼辦？</h2>
+                        <button onClick={this.death}>不活了</button>
+                    </div>
+                )
+            }
+
+        }
+        ReactDOM.render(<Life />, document.getElementById('test'))
     </script>
 </body>
 
