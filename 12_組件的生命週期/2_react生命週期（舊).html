@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>生命週期＿舊</title>
+</head>
+
+<body>
+    <!-- 容器 -->
+    <div>
+        <div id="test"></div>
+    </div>
+    <!--  React 核心庫  -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <!--  React 擴充庫  -->
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!--  Babel 將JSX轉為JS -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!--  注意!! type須改為Babel才可執行jsx語法  -->
+    <script type="text/babel">
+        /*
+            1. 初始化階段：由ReactDOM.render()觸發 --- 初次渲染
+                    1. constructor()           // ** 構造器
+                    2. componentWillMount()    // ** 組件將要掛載
+                    3. render()
+                    4. componentDidMount()     // ** 組件掛載完成
+            2. 更新階段：由組件內部 this.setState()或父組件render觸發
+                    1. shouldComponentUpdate() // ** 控制組件更新的“閥門”
+                    2. componentWillUpdate()   // ** 組件將要更新
+                    3. render()
+                    4. componentDidUpdate()    // ** 組件更新“完畢”的鉤子
+            3. 卸載組件：ReactDOM.unmountComponentAtNode()觸發
+                    1. componentWillUnmount()  // ** 卸載組件    
+        */
+
+
+
+        // 創建組件
+        class Count extends React.Component {
+            // 構造器
+            constructor(prop) {
+                console.log('constructor --- 構造器')
+                super(prop)
+                // 初始狀態
+                this.state = { count: 0 }
+            }
+            // 加1按鈕的回調
+            add = () => {
+                //獲取狀態
+                const { count } = this.state
+                this.setState({ count: count + 1 })
+            }
+            // 卸載組件的回調
+            death = () => {
+                ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+            }
+            // 強制更新的回調
+            force = () => {
+                this.forceUpdate()
+            }
+            //  組件將要掛載的鉤子
+            componentWillMount() {
+                console.log('componentWillMount --- 將要掛載的鉤子')
+            }
+
+            // 組件掛載完畢的鉤子
+            componentDidMount() {
+                console.log('componentDidMount --- 掛載完畢的鉤子')
+            }
+            // 組件將要卸載時的鉤子
+            componentWillUnmount() {
+                console.log('componentWillUnmount --- 將要卸載時的鉤子')
+            }
+
+            // 控制組件更新的“閥門”
+            shouldComponentUpdate() {
+                console.log('shouldComponentUpdate --- 控制組件更新的“閥門”')
+                // 此鉤子需要給一個返回的布林值 否則不會有更新狀態
+                return true // false
+            }
+            // 組件將要更新時的鉤子
+            componentWillUpdate() {
+                console.log('componentWillUpdate --- 將要更新時的鉤子')
+            }
+
+            // 組件更新完畢的鉤子
+            componentDidUpdate() {
+                console.log('componentDidUpdate --- 更新完畢的鉤子')
+            }
+
+            render() {
+                console.log('render')
+                const { count } = this.state
+                return (
+                    <div>
+                        <h2>當前求和為{count}</h2>
+                        <button onClick={this.add}>加1</button>
+                        <button onClick={this.death}>卸載組件</button>
+                        <button onClick={this.force}>強制更新</button>
+                    </div>
+                )
+            }
+        }
+        // 父組件 A
+        class A extends React.Component {
+            // 初始化狀態
+            state = { carName: 'Benz' }
+            // 換車按鈕
+            changeCar = () => {
+                this.setState({ carName: 'BMW' })
+            }
+            render() {
+                return (
+                    <div>
+                        <div>我是Ａ組件</div>
+                        <button onClick={this.changeCar}>換車</button>
+                        <B carName={this.state.carName} />
+                    </div>
+                )
+            }
+        }
+        // 子組件 B
+        class B extends React.Component {
+            // 組件將要接收新的Props的鉤子
+            componentWillReceiveProps(props) {
+                console.log('B --- componentWillReceiveProps')
+            }
+            // 控制組件更新的“閥門”
+            shouldComponentUpdate() {
+                console.log('B --- shouldComponentUpdate --- 控制組件更新的“閥門”')
+                // 此鉤子需要給一個返回的布林值 否則不會有更新狀態
+                return true // false
+            }
+            // 組件將要更新時的鉤子
+            componentWillUpdate() {
+                console.log('B --- componentWillUpdate --- 將要更新時的鉤子')
+            }
+            // 組件更新完畢的鉤子
+            componentDidUpdate() {
+                console.log('B --- componentDidUpdate --- 更新完畢的鉤子')
+            }
+            
+            render() {
+                return (
+                    <div>
+                        <div>我是Ｂ組件，接收到的車是：{this.props.carName}</div>
+                    </div>
+                )
+            }
+        }
+        //  組件掛載注意調整
+        ReactDOM.render(<A />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>
