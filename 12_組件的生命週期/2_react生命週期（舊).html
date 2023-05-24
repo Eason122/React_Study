@@ -24,17 +24,18 @@
                     1. constructor()           // ** 構造器
                     2. componentWillMount()    // ** 組件將要掛載
                     3. render()
-                    4. componentDidMount()     // ** 組件掛載完成
+                    4. componentDidMount()     // ** 組件掛載完成   ====> 常用！ 
+                            一般在這個鉤子中做一些初始化的事，例如：開啟定時器、發送網路請求、訂閱消息。
+
             2. 更新階段：由組件內部 this.setState()或父組件render觸發
                     1. shouldComponentUpdate() // ** 控制組件更新的“閥門”
                     2. componentWillUpdate()   // ** 組件將要更新
                     3. render()
                     4. componentDidUpdate()    // ** 組件更新“完畢”的鉤子
             3. 卸載組件：ReactDOM.unmountComponentAtNode()觸發
-                    1. componentWillUnmount()  // ** 卸載組件    
+                    1. componentWillUnmount()  // ** 卸載組件    ====> 常用！
+                            一般在這個鉤子中做一些收尾的事情，例如：關閉定時器、取消訂閱消息  
         */
-
-
 
         // 創建組件
         class Count extends React.Component {
@@ -140,7 +141,7 @@
             componentDidUpdate() {
                 console.log('B --- componentDidUpdate --- 更新完畢的鉤子')
             }
-            
+
             render() {
                 return (
                     <div>
